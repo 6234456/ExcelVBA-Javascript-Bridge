@@ -1,3 +1,4 @@
+' toJSON  to convert the spreadsheet content into JSON-file with root node named "root"
 Function toJSON(ByVal shtNm As String, ByVal keyEndCol As Integer, Optional ByVal fileName As String) As String
     ' KeyEndCol the first column without cellmerge
 
