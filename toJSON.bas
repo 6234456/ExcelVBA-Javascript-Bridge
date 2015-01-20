@@ -106,21 +106,6 @@ Private Function packAttr(ByVal targRow As Integer, ByVal startCol As Integer, B
 
 End Function
 
-Private Sub preProcess()
-
-    For i = ActiveSheet.UsedRange.Columns(3).Cells.Count To 1 Step -1
-        If Cells(i, 3).Font.Bold Then
-            Rows(i).Delete
-        End If
-    Next i
-    
-    Rows(1).Delete
-    Rows(2).Delete
-    
-    Cells(1, 1).Value = "Kunden"
-    Cells(1, 2).Value = "Produktgruppe"
-
-End Sub
 
 Private Function isMerged(ByVal rng As Range) As Boolean
     
