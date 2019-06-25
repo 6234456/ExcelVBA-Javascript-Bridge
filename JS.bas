@@ -16,13 +16,21 @@ Public Property Let code(ByVal c As String)
     
     Dim mycode As String
     
-    ' to convert the VBA-array to JS-array
+    ' to convert the VBA-array to JS-array and parser to the VBA-Object
     mycode = "function getArray(arrayIn) {" & _
                 "return new VBArray(arrayIn).toArray();}" & _
             "function setArray(ja) {" & _
                 "var dict = new ActiveXObject('Scripting.Dictionary');" & _
                 "for (var i=0;i < ja.length; i++ )dict.add(i,ja[i]);" & _
-                "return dict.items();}" & pCode & pCallback
+                "return dict.items();}" & _
+            "function parserJSON(s){ return eval('(' + s + ')');}" & _
+            "function getType(o) {return {}.toString.call(o).slice(8, -1)}" & _
+            "function parser(obj){" & _
+                "var type = getType(obj); var res = new ActiveXObject('Scripting.Dictionary');" & _
+                "if(type == 'Array'){ for(var i = 0 ; i < obj.length ; i++) res.add(i, parser(obj[i])); return res.items();}" & _
+                "else if(type == 'Object'){ for(var i in obj) res.add(i, obj[i]); return res;}" & _
+                "else return obj; }" & _
+            pCode & pCallback
     
     
     ' if pScriptControl already exists
